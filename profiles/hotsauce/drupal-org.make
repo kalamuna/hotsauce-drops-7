@@ -14,8 +14,12 @@ core = 7.x
 
 ; Here we add in all the kalagoods
 
-projects[kalatheme][version] = 3.0-rc2
 projects[kalatheme][type] = theme
+projects[kalatheme][download][type] = git
+projects[kalatheme][download][revision] = 855687c
+projects[kalatheme][download][branch] = 7.x-3.x
+projects[kalatheme][download][url] = http://git.drupal.org/project/kalatheme.git
+
 
 ; **********************************************
 ; **************** END KALAMAGIX ***************
