@@ -1,8 +1,7 @@
 <?php
-
 /**
  * @file
- * Kalatheme's overridden theme functions
+ * Theme and hook functions for core things.
  */
 
 
@@ -181,346 +180,48 @@ function kalatheme_status_report($variables) {
 }
 
 /**
- * Implements theme_button().
- */
-function kalatheme_button($variables) {
-  $element = $variables['element'];
-  $element['#attributes']['type'] = 'submit';
-  element_set_attributes($element, array('id', 'name', 'value'));
-
-  $element['#attributes']['class'][] = 'form-' . $element['#button_type'];
-  $element['#attributes']['class'][] = 'btn';
-  $element['#attributes']['class'][] = 'btn-primary';
-  if (!empty($element['#attributes']['disabled'])) {
-    $element['#attributes']['class'][] = 'form-button-disabled';
-  }
-
-  return '<input' . drupal_attributes($element['#attributes']) . ' />';;
-}
-
-/**
- * Implements theme_textarea().
- */
-function kalatheme_textarea($variables) {
-  $element = $variables['element'];
-  _kalatheme_ensure_class($element);
-  $element['#attributes']['name'] = $element['#name'];
-  $element['#attributes']['id'] = $element['#id'];
-  $element['#attributes']['cols'] = $element['#cols'];
-  $element['#attributes']['rows'] = $element['#rows'];
-  _form_set_class($element, array('form-textarea'));
-
-  // Add Bootstrap class.
-  $element['#attributes']['class'][] = 'form-control';
-
-  $wrapper_attributes = array(
-    'class' => array('form-textarea-wrapper'),
-  );
-
-  // Add resizable behavior.
-  if (!empty($element['#resizable'])) {
-    $wrapper_attributes['class'][] = 'resizable';
-  }
-
-  $output = '<div' . drupal_attributes($wrapper_attributes) . '>';
-  $output .= '<textarea' . drupal_attributes($element['#attributes']) . '>' . check_plain($element['#value']) . '</textarea>';
-  $output .= '</div>';
-  return $output;
-}
-
-/**
- * Implements theme_textfield().
- */
-function kalatheme_textfield($variables) {
-  _kalatheme_ensure_class($variables['element']);
-  // Add Bootstrap class, then defer to core for the rest.
-  $variables['element']['#attributes']['class'][] = 'form-control';
-  return theme_textfield($variables);
-}
-
-/**
- * Implements theme_select().
- */
-function kalatheme_select($variables) {
-  _kalatheme_ensure_class($variables['element']);
-  // Add Bootstrap class, then defer to core for the rest.
-  $variables['element']['#attributes']['class'][] = 'form-control';
-  return theme_select($variables);
-}
-
-/**
- * Implements theme_password().
- */
-function kalatheme_password($variables) {
-  _kalatheme_ensure_class($variables['element']);
-  // Add Bootstrap class, then defer to core for the rest.
-  $variables['element']['#attributes']['class'][] = 'form-control';
-  return theme_password($variables);
-}
-
-/**
- * Implements theme_menu_tree().
- */
-function kalatheme_menu_tree($variables) {
-  return '<ul class="menu clearfix">' . $variables['tree'] . '</ul>';
-}
-
-/**
- * Implements theme_field__field_type().
- */
-function kalatheme_field__taxonomy_term_reference($variables) {
-  $output = '';
-
-  // Render the label, if it's not hidden.
-  if (!$variables['label_hidden']) {
-    $output .= '<h3 class="field-label">' . $variables['label'] . ': </h3>';
-  }
-
-  // Render the items.
-  $output .= ($variables['element']['#label_display'] == 'inline') ? '<ul class="links list-inline">' : '<ul class="links">';
-  foreach ($variables['items'] as $delta => $item) {
-    $output .= '<li class="taxonomy-term-reference-' . $delta . '"' . $variables['item_attributes'][$delta] . '>' . drupal_render($item) . '</li>';
-  }
-  $output .= '</ul>';
-
-  // Render the top-level DIV.
-  $output = '<div class="' . $variables['classes'] . (!in_array('clearfix', $variables['classes_array']) ? ' clearfix' : '') . '"' . $variables['attributes'] . '>' . $output . '</div>';
-
-  return $output;
-}
-
-
-/**
- * Implements theme_links__system_main_menu.
- */
-function kalatheme_links__system_main_menu($variables) {
-  $links = $variables['links'];
-  $attributes = $variables['attributes'];
-  $heading = $variables['heading'];
-  unset($links['#sorted']);
-  unset($links['#theme_wrappers']);
-  global $language_url;
-  $output = '';
-
-  if (count($links) > 0) {
-    $output = '';
-
-    // Treat the heading first if it is present to prepend it to the
-    // list of links.
-    if (!empty($heading)) {
-      if (is_string($heading)) {
-        // Prepare the array that will be used when the passed heading
-        // is a string.
-        $heading = array(
-          'text' => $heading,
-          // Set the default level of the heading.
-          'level' => 'h2',
-        );
-      }
-      $output .= '<' . $heading['level'];
-      if (!empty($heading['class'])) {
-        $output .= drupal_attributes(array('class' => $heading['class']));
-      }
-      $output .= '>' . check_plain($heading['text']) . '</' . $heading['level'] . '>';
-    }
-
-    $output .= '<ul' . drupal_attributes($attributes) . '>';
-
-    $num_links = count($links);
-    $i = 1;
-
-    foreach ($links as $key => $link) {
-      $class = array($key);
-      $link['#attributes'] = (isset($link['#localized_options']['attributes'])) ? $link['#localized_options']['attributes'] : array();
-
-      // Add first/last/active classes to help out themers.
-      if ($i == 1) {
-        $class[] = 'first';
-      }
-      if ($i == $num_links) {
-        $class[] = 'last';
-      }
-      if (isset($link['#href']) && ($link['#href'] == $_GET['q'] || ($link['#href'] == '<front>' && drupal_is_front_page()))
-        && (empty($link['#language']) || $link['#language']->language == $language_url->language)) {
-        $class[] = 'active';
-      }
-      // Check for, and honor active states set by context menu reactions
-      if (module_exists('context')) {
-        $contexts = context_active_contexts();
-        foreach ($contexts as $context) {
-          if ((isset($context->reactions['menu']))) {
-            if ($link['#href'] == $context->reactions['menu']) {
-              $class[] = 'active';
-            }
-          }
-        }
-      }
-
-      $options['attributes'] = $link['#attributes'];
-
-      // Make list item a dropdown if we have child items.
-      if (!empty($link['#below'])) {
-        $class[] = 'dropdown';
-        $class[] = 'clearfix';
-      }
-      $output .= '<li' . drupal_attributes(array('class' => $class)) . '>';
-
-      if (isset($link['#href'])) {
-        // Pass in $link as $options, they share the same keys.
-        $output .= l($link['#title'], $link['#href'], array('attributes' => $link['#attributes']));
-      }
-      elseif (!empty($link['#title'])) {
-        // Wrap non-<a> links in <span> for adding title and class attributes.
-        if (empty($link['#html'])) {
-          $link['#title'] = check_plain($link['#title']);
-        }
-        $span_attributes = '';
-        if (isset($link['#attributes'])) {
-          $span_attributes = drupal_attributes($link['#attributes']);
-        }
-        $output .= '<span' . $span_attributes . '>' . $link['#title'] . '</span>';
-      }
-
-      // If link has child items, print a toggle and dropdown menu.
-      if (!empty($link['#below'])) {
-        $dropdown_id = 'main-menu-dropdown-' . $i;
-        $output .= '<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="' . $dropdown_id. '"><span class="caret"></span></a>';
-        $output .= theme('links__system_main_menu', array(
-          'links' => $link['#below'],
-          'attributes' => array(
-            'class' => array('dropdown-menu'),
-            'role' => 'menu',
-            'aria-labelledby' => $dropdown_id
-          ),
-        ));
-      }
-
-      $i++;
-      $output .= "</li>\n";
-    }
-
-    $output .= '</ul>';
-  }
-
-  return $output;
-}
-
-/**
- * Use Bootstrap-styled status messages when appropriate.
- *
- * Implements theme_status_messages().
+ * Returns HTML for status and/or error messages, grouped by type.
  */
 function kalatheme_status_messages($variables) {
-  // Call correct theme function depending on whether all dependencies loaded.
-  require_once dirname(__FILE__) . '/utils.inc';
-  $status_function = _kalatheme_load_dependencies();
-  return $status_function($variables);
-}
-
-/**
- * Returns HTML for primary and secondary local tasks.
- *
- * Implements theme_menu_local_tasks().
- */
-function kalatheme_menu_local_tasks(&$variables) {
+  $display = $variables['display'];
   $output = '';
 
-  if (!empty($variables['primary'])) {
-    $variables['primary']['#prefix'] = '<h2 class="element-invisible">' . t('Primary tabs') . '</h2>';
-    $variables['primary']['#prefix'] = '<ul class="nav nav-pills">';
-    $variables['primary']['#suffix'] = '</ul>';
-    if (!empty($variables['secondary'])) {
-      $variables = _kalatheme_associate_parent_tasks($variables);
+  $status_heading = array(
+    'status' => t('Status message'),
+    'error' => t('Error message'),
+    'warning' => t('Warning message'),
+  );
+
+  // Map Drupal message types to their corresponding Bootstrap classes.
+  // @see http://twitter.github.com/bootstrap/components.html#alerts
+  $status_class = array(
+    'status' => 'success',
+    'error' => 'danger',
+    'warning' => 'info',
+  );
+
+  foreach (drupal_get_messages($display) as $type => $messages) {
+    $class = (isset($status_class[$type])) ? ' alert-' . $status_class[$type] : '';
+    $output .= "<div class=\"alert alert-block$class\">\n";
+    $output .= "  <a class=\"close\" data-dismiss=\"alert\" href=\"#\">&times;</a>\n";
+
+    if (!empty($status_heading[$type])) {
+      $output .= '<h2 class="element-invisible">' . $status_heading[$type] . "</h2>\n";
     }
-    $output .= drupal_render($variables['primary']);
-  }
 
-  return $output;
-}
-
-/**
- * HTML for individual local task links.
- *
- * Implements theme_menu_local_task().
- */
-function kalatheme_menu_local_task($variables) {
-  $link = $variables['element']['#link'];
-  $children = isset($variables['element']['#children']) ? $variables['element']['#children'] : FALSE;
-  $link_text = $link['title'];
-  $classes = array();
-
-  if (!empty($variables['element']['#active'])) {
-    // Add text to indicate active tab for non-visual users.
-    $active = '<span class="element-invisible">' . t('(active tab)') . '</span>';
-
-    // If the link does not contain HTML already, check_plain() it now.
-    // After we set 'html'=TRUE the link will not be sanitized by l().
-    if (empty($link['localized_options']['html'])) {
-      $link['title'] = check_plain($link['title']);
+    if (count($messages) > 1) {
+      $output .= " <ul>\n";
+      foreach ($messages as $message) {
+        $output .= '  <li>' . $message . "</li>\n";
+      }
+      $output .= " </ul>\n";
     }
-    $link['localized_options']['html'] = TRUE;
-    $link_text = t('!local-task-title!active', array('!local-task-title' => $link['title'], '!active' => $active));
+    else {
+      $output .= $messages[0];
+    }
 
-    $classes[] = 'active';
+    $output .= "</div>\n";
   }
-
-  // If the primary link has children, render them as a dropdown.
-  if ($children) {
-    $classes[] = 'dropdown';
-    $link['localized_options']['attributes']['class'][] = 'dropdown-toggle';
-    $link['localized_options']['attributes']['data-toggle'][] = 'dropdown';
-    $link['href'] = '#';
-    $link_text .= ' <b class="caret"></b>';
-    $output = '<li class="' . implode(' ', $classes) . '">';
-    $output .= l($link_text, $link['href'], $link['localized_options']);
-    $output .= '<ul class="dropdown-menu">';
-    $output .= drupal_render($children);
-    $output .= '</ul>';
-    $output .= '</li>';
-    return $output;
-  }
-  else {
-    return '<li class="' . implode(' ', $classes) . '">' . l($link_text, $link['href'], $link['localized_options']) . "</li>\n";
-  }
-}
-
-/**
- * HTML for all local actions (rendered as dropdown).
- */
-function kalatheme_menu_local_actions($variables) {
-  $container_attributes = isset($variables['attributes']['container']) ? drupal_attributes($variables['attributes']['container']) : FALSE;
-  $toggle_attributes = isset($variables['attributes']['toggle']) ? drupal_attributes($variables['attributes']['toggle']) : FALSE;
-  $content_attributes = isset($variables['attributes']['content']) ? drupal_attributes($variables['attributes']['content']) : FALSE;
-
-  // Render the dropdown.
-  $output = $container_attributes ?  '<li' . $container_attributes . '>' : '<li>';
-  $output .= $toggle_attributes ?  '<a' . $toggle_attributes . '><i class="glyphicon glyphicon-wrench"></i> ' . t('Actions') . '<b class="caret"></b></a>' : '<a>' . t('Actions') . '<b class="caret"></b></a>';
-  $output .= $content_attributes ? '<ul' . $content_attributes . '>' : '<ul>';
-  $output .= drupal_render($variables['menu_actions']);
-  $output .= '</ul>';
-  $output .= '</li>';
-
-  return $output;
-}
-
-/**
- * HTML for individual local actions.
- */
-function kalatheme_menu_local_action($variables) {
-  $link = $variables['element']['#link'];
-
-  $output = '<li>';
-  if (isset($link['href'])) {
-    $output .= l($link['title'], $link['href'], isset($link['localized_options']) ? $link['localized_options'] : array());
-  }
-  elseif (!empty($link['localized_options']['html'])) {
-    $output .= $link['title'];
-  }
-  else {
-    $output .= check_plain($link['title']);
-  }
-  $output .= "</li>\n";
-
   return $output;
 }
 
@@ -755,43 +456,179 @@ function kalatheme_update_report($variables) {
 }
 
 /**
- * Checks that a render array's ['#attribute']['class'] is set, adding it if
- * necessary.
+ * Implements theme_user_admin_permissions().
  *
- * @param array $render_array
- *   A renderable array.
+ * Basically it just removes the 'checkbox' classes to avoid conflicts with Bootstrap.
  */
-function _kalatheme_ensure_class(&$render_array) {
-  if (!isset($render_array['#attributes'])) {
-    $render_array['#attributes'] = array();
+function kalatheme_user_admin_permissions($variables) {
+  $form = $variables['form'];
+
+  $roles = user_roles();
+  foreach (element_children($form['permission']) as $key) {
+    $row = array();
+    // Module name
+    if (is_numeric($key)) {
+      $row[] = array('data' => drupal_render($form['permission'][$key]), 'class' => array('module'), 'id' => 'module-' . $form['permission'][$key]['#id'], 'colspan' => count($form['role_names']['#value']) + 1);
+    }
+    else {
+      // Permission row.
+      $row[] = array(
+        'data' => drupal_render($form['permission'][$key]),
+        'class' => array('permission'),
+      );
+      foreach (element_children($form['checkboxes']) as $rid) {
+        $form['checkboxes'][$rid][$key]['#title'] = $roles[$rid] . ': ' . $form['permission'][$key]['#markup'];
+        $form['checkboxes'][$rid][$key]['#title_display'] = 'invisible';
+        $row[] = array('data' => drupal_render($form['checkboxes'][$rid][$key]));
+      }
+    }
+    $rows[] = $row;
   }
-  if (!isset($render_array['#attributes']['class'])) {
-    $render_array['#attributes']['class'] = array();
+  $header[] = (t('Permission'));
+  foreach (element_children($form['role_names']) as $rid) {
+    $header[] = array('data' => drupal_render($form['role_names'][$rid]));
   }
+  $output = theme('system_compact_link');
+  $output .= theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('id' => 'permissions')));
+  $output .= drupal_render_children($form);
+  return $output;
 }
 
 /**
- * Calculates a column number based on columns in the total and current grid.
- *
- * @param int $percentage
- *   Whole number version of the percentage to calculate.
- * @param (optional) integer $total_columns
- *   The total actual columns in the current row. Defaults to 2.
- *
- * @return int
- *   The column count, rounded if necessary.
+ * Implements template_preprocess_comment().
  */
-function kalatheme_grid_size($percentage, $total_columns = 2) {
-  $columns = $percentage * KALATHEME_GRID_SIZE;
-  // Deal with uneven division.
-  if (!is_integer($columns)) {
-    if ($columns > (KALATHEME_GRID_SIZE / $total_columns)) {
-      $columns = floor($columns);
-    }
-    else {
-      $columns = ceil($columns);
-    }
-  }
+function kalatheme_preprocess_comment(&$variables) {
+  $comment = $variables['comment'];
 
-  return $columns;
+  // Add proper classes.
+  $variables['title_attributes_array']['class'][] = 'media-heading';
+
+  // Use icon for permalink.
+  $uri = entity_uri('comment', $comment);
+  $uri['options'] += array(
+    'attributes' => array(
+      'class' => 'permalink muted pull-right',
+      'rel' => 'bookmark',
+    ),
+    'html' => TRUE,
+  );
+  $icon_html = '<i class="icon-comment"></i>';
+  $variables['permalink'] = l($icon_html, $uri['path'], $uri['options']);
+
+  // Use icon for new.
+  $variables['new'] = !empty($comment->new) ? '<i class="icon-comment"></i>' : '';
 }
+
+
+/**
+ * Implements theme_pager().
+ */
+function kalatheme_pager($variables) {
+  $tags = $variables['tags'];
+  $element = $variables['element'];
+  $parameters = $variables['parameters'];
+  $quantity = $variables['quantity'];
+  global $pager_page_array, $pager_total;
+
+  // Calculate various markers within this pager piece:
+  // Middle is used to "center" pages around the current page.
+  $pager_middle = ceil($quantity / 2);
+  // current is the page we are currently paged to
+  $pager_current = $pager_page_array[$element] + 1;
+  // first is the first page listed by this pager piece (re quantity)
+  $pager_first = $pager_current - $pager_middle + 1;
+  // last is the last page listed by this pager piece (re quantity)
+  $pager_last = $pager_current + $quantity - $pager_middle;
+  // max is the maximum page number
+  $pager_max = $pager_total[$element];
+  // End of marker calculations.
+
+  // Prepare for generation loop.
+  $i = $pager_first;
+  if ($pager_last > $pager_max) {
+    // Adjust "center" if at end of query.
+    $i = $i + ($pager_max - $pager_last);
+    $pager_last = $pager_max;
+  }
+  if ($i <= 0) {
+    // Adjust "center" if at start of query.
+    $pager_last = $pager_last + (1 - $i);
+    $i = 1;
+  }
+  // End of generation loop preparation.
+
+  $li_first = theme('pager_first', array('text' => (isset($tags[0]) ? $tags[0] : t('« first')), 'element' => $element, 'parameters' => $parameters));
+  $li_previous = theme('pager_previous', array('text' => (isset($tags[1]) ? $tags[1] : t('‹ previous')), 'element' => $element, 'interval' => 1, 'parameters' => $parameters));
+  $li_next = theme('pager_next', array('text' => (isset($tags[3]) ? $tags[3] : t('next ›')), 'element' => $element, 'interval' => 1, 'parameters' => $parameters));
+  $li_last = theme('pager_last', array('text' => (isset($tags[4]) ? $tags[4] : t('last »')), 'element' => $element, 'parameters' => $parameters));
+
+  if ($pager_total[$element] > 1) {
+    if ($li_first) {
+      $items[] = array(
+        'class' => array('pager-first'),
+        'data' => $li_first,
+      );
+    }
+    if ($li_previous) {
+      $items[] = array(
+        'class' => array('pager-previous'),
+        'data' => $li_previous,
+      );
+    }
+
+    // When there is more than one page, create the pager list.
+    if ($i != $pager_max) {
+      if ($i > 1) {
+        $items[] = array(
+          'class' => array('pager-ellipsis'),
+          'data' => '…',
+        );
+      }
+      // Now generate the actual pager piece.
+      for (; $i <= $pager_last && $i <= $pager_max; $i++) {
+        if ($i < $pager_current) {
+          $items[] = array(
+            'class' => array('pager-item'),
+            'data' => theme('pager_previous', array('text' => $i, 'element' => $element, 'interval' => ($pager_current - $i), 'parameters' => $parameters)),
+          );
+        }
+        if ($i == $pager_current) {
+          $items[] = array(
+            'class' => array('pager-current', 'active'),
+            'data' => '<span>' . $i . '</span>',
+          );
+        }
+        if ($i > $pager_current) {
+          $items[] = array(
+            'class' => array('pager-item'),
+            'data' => theme('pager_next', array('text' => $i, 'element' => $element, 'interval' => ($i - $pager_current), 'parameters' => $parameters)),
+          );
+        }
+      }
+      if ($i < $pager_max) {
+        $items[] = array(
+          'class' => array('pager-ellipsis'),
+          'data' => '…',
+        );
+      }
+    }
+    // End generation.
+    if ($li_next) {
+      $items[] = array(
+        'class' => array('pager-next'),
+        'data' => $li_next,
+      );
+    }
+    if ($li_last) {
+      $items[] = array(
+        'class' => array('pager-last'),
+        'data' => $li_last,
+      );
+    }
+    return '<div class="text-center">' . theme('item_list', array(
+      'items' => $items,
+      'attributes' => array('class' => array('pagination')),
+    )) . '</div>';
+  }
+}
+

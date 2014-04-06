@@ -28,13 +28,15 @@ settings[toggle_secondary_menu] = 1
 settings[responsive_toggle] = 1
 settings[pane_styles_toggle] = 1
 settings[always_show_page_title] = 0
+settings[build_subtheme] = 0
+settings[fontawesome] = 1
 
 plugins[panels][styles] = styles
 
 
 ; Information added by drush on 2014-04-06
-version = "7.x-3.0-rc2+5-dev"
+version = "7.x-3.0-rc2+31-dev"
 core = "7.x"
 project = "kalatheme"
-datestamp = "1396765152"
+datestamp = "1396769202"
 
