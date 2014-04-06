@@ -31,9 +31,10 @@ settings[always_show_page_title] = 0
 
 plugins[panels][styles] = styles
 
-; Information added by Drupal.org packaging script on 2014-02-16
-version = "7.x-3.0-rc2+4-dev"
+
+; Information added by drush on 2014-04-06
+version = "7.x-3.0-rc2+5-dev"
 core = "7.x"
 project = "kalatheme"
-datestamp = "1392578606"
+datestamp = "1396765152"
 

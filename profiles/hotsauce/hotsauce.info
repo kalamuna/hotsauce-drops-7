@@ -60,3 +60,11 @@ dependencies[] = apps
 dependencies[] = defaultcontent
 dependencies[] = devel
 dependencies[] = uuid
+
+
+; Information added by drush on 2014-04-06
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "hotsauce"
+datestamp = "1396765140"
+
