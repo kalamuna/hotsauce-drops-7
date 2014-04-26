@@ -13,5 +13,5 @@ configure = admin/config/media/wysiwyg-view-mode
 version = "7.x-2.0-alpha3+12-dev"
 core = "7.x"
 project = "media"
-datestamp = "1398554518"
+datestamp = "1398555938"
 

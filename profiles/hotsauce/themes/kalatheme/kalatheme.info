@@ -35,8 +35,8 @@ plugins[panels][styles] = styles
 
 
 ; Information added by drush on 2014-04-26
-version = "7.x-3.0-rc2+40-dev"
+version = "7.x-3.0-rc2+41-dev"
 core = "7.x"
 project = "kalatheme"
-datestamp = "1398554540"
+datestamp = "1398555952"
 
