@@ -1,6 +1,6 @@
 ; Packaging information for Hot Sauce
-name = Hot Sauce
-distribution_name = "Hot Sauce"
+name = HotSauce!
+distribution_name = "HotSauce!"
 description = "This sauce is hot!"
 version = "7.x-1.x"
 core = "7.x"
@@ -62,9 +62,9 @@ dependencies[] = devel
 dependencies[] = uuid
 
 
-; Information added by drush on 2014-04-06
+; Information added by drush on 2014-04-26
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hotsauce"
-datestamp = "1396769192"
+datestamp = "1398554490"
 

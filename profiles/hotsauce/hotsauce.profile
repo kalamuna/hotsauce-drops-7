@@ -18,16 +18,12 @@ function hotsauce_install_tasks($install_state) {
 
   // @todo: Switch to Kalamuna App server
   require_once(drupal_get_path('module', 'apps') . '/apps.profile.inc');
-  $tasks = $tasks + apps_profile_install_tasks($install_state, array('machine name' => 'panopoly', 'default apps' => array('panopoly_demo')));
+  $tasks = $tasks + apps_profile_install_tasks($install_state, array('machine name' => 'hotapps', 'default apps' => array()));
 
   // Add subtheme generator to installation workflow
   $tasks['hotsauce_theme_configure_form'] = array(
     'display_name' => t('Configure theme'),
     'type' => 'form',
-  );
-  $tasks['hotsauce_theme_batch'] = array(
-    'display_name' => t('Build theme'),
-    'type' => 'batch',
   );
 
   return $tasks;
@@ -43,6 +39,20 @@ function hotsauce_install_tasks_alter(&$tasks, $install_state) {
 }
 
 /**
+ * Implements hook_apps_servers_info()
+ */
+function hotsauce_apps_servers_info() {
+  //$info =  drupal_parse_info_file(drupal_get_path('profile', 'hotsauce') . '/hotsauce.info');
+  return array(
+    'hotapps' => array(
+      'title' => 'HotApps!',
+      'description' => 'First generation HotApps! for the people.',
+      'manifest' => 'http://apps.kalamuna.com/hotapps1',
+    ),
+  );
+}
+
+/**
  * Form to configure the Kalatheme
  */
 function hotsauce_theme_configure_form($form, &$form_state) {
@@ -50,15 +60,31 @@ function hotsauce_theme_configure_form($form, &$form_state) {
   drupal_set_title(t('Configure theme'));
 
   // Get the form from Kalatheme
-  require_once dirname(__FILE__) . '/themes/kalatheme/includes/setup.inc';
-  $form = kalatheme_setup_form();
+  require_once dirname(__FILE__) . '/themes/kalatheme/includes/config.inc';
 
-  // Remove some unneeded things, these same things should be verified by
-  // Apps server installation
-  unset($form['backend_check']);
-  unset($form['help_text']);
-  $form['enable_theme']['#prefix'] = "<div class='element-invisible'>";
-  $form['enable_theme']['#suffix'] = "</div>";
+  // Kalatheme settings
+  $form = array_merge($form, kalatheme_bootstrap_library_form());
+  $form['bootstrap']['bootstrap_library']['#default_value'] = theme_get_setting('bootstrap_library');
+  $form['bootstrap']['fontawesome']['#default_value'] = theme_get_setting('fontawesome');
+  $form['bootstrap']['bootstrap_upload']['#default_value'] = theme_get_setting('bootstrap_upload');
+  // Subtheme settings
+  // @todo: subthemes don't work yet here.
+  //$form = array_merge($form, kalatheme_subtheme_form());
+  // Make sure the callback function and other fun things are actually loaded
+  $form = system_settings_form($form);
+  // We don't want to call system_settings_form_submit(), so change #submit.
+  array_pop($form['#submit']);
+  $form['#submit'][] = 'system_theme_settings_submit';
+
+  // Prepasre the form so it can handle subtheme things
+  $form = kalatheme_prepare_config_form($form);
+  // Kalatheme normally assumes that it is enabled and set default
+  // In the installer this is not true so we should set default and enable
+  // if appropriate
+  array_unshift($form['#submit'], 'hotsauce_enable_theme');
+
+  $form_state['build_info']['files'][] = drupal_get_path('theme', 'kalatheme') . '/includes/config.inc';
+  $form_state['build_info']['files'][] = drupal_get_path('theme', 'kalatheme') . '/kalatheme.updater.inc';
 
   return $form;
 }
@@ -67,29 +93,34 @@ function hotsauce_theme_configure_form($form, &$form_state) {
  * Wrapper function to the Kalatheme validation magic
  */
 function hotsauce_theme_configure_form_validate($form, &$form_state) {
-  if (function_exists('kalatheme_setup_form_validate')) {
-    kalatheme_setup_form_validate($form, $form_state);
+  if (function_exists('kalatheme_custom_bootstrap_library_validate')) {
+    kalatheme_custom_bootstrap_library_validate($form, $form_state);
   }
 }
 
 /**
- * Wrapper function to the Kalatheme batch magic
+ * Wrapper function to the Kalatheme validation magic
  */
-function hotsauce_theme_batch() {
-  // Get the stuff from Kalatheme
-  $form = array();
-  $form_state = array();
-  foreach ($_POST as $key => $value) {
-    $form_state['values'][$key] = $value;
+function hotsauce_enable_theme($form, &$form_state) {
+  // Generate subtheme and build its settings var
+  if (isset($form_state['values']['build_subtheme']) && !$form_state['values']['build_subtheme']) {
+    // Set basic settings
+    $theme_settings['bootstrap_library'] = $form_state['values']['bootstrap_library'];
+    $theme_settings['fontawesome'] = $form_state['values']['fontawesome'];
+    // We do this to trick kalatheme_custom_subtheme_vars
+    $theme_settings['subtheme_name'] = 'kalatheme';
+    kalatheme_custom_subtheme_vars($theme_settings);
+    // Enable and redirect if required
+    // Rebuild theme registry stuff
+    system_rebuild_theme_data();
+    drupal_theme_rebuild();
+    // Enable new theme
+    theme_enable(array('kalatheme'));
+    variable_set('theme_default', 'kalatheme');
+    // We need to do the big dump
+    // @todo: should figure out the actual caches we need to clear
+    drupal_flush_all_caches();
   }
-  if (!function_exists('kalatheme_setup_batch')) {
-    require_once dirname(__FILE__) . '/themes/kalatheme/includes/setup.inc';
-  }
-  $batch = kalatheme_setup_batch($form, $form_state);
-  // This will be null coming out of kalatheme_setup_batch so we set it here
-  // instead
-  $batch['file'] = drupal_get_path('profile', 'hotsauce') . '/themes/kalatheme/includes/setup.inc';
-  return $batch;
 }
 
 /**
