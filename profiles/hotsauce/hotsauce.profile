@@ -61,6 +61,7 @@ function hotsauce_theme_configure_form($form, &$form_state) {
 
   // Get the form from Kalatheme
   require_once dirname(__FILE__) . '/themes/kalatheme/includes/config.inc';
+  require_once dirname(__FILE__) . '/themes/kalatheme/includes/utils.inc';
 
   // Kalatheme settings
   $form = array_merge($form, kalatheme_bootstrap_library_form());
