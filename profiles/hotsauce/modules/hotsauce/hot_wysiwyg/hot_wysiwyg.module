@@ -3,7 +3,7 @@
  * @file
  */
 
-include_once('hot_wysiywg.features.inc');
+include_once('hot_wysiwyg.features.inc');
 include_once('hot_wysiywg.features.wysiwyg.inc');
 
 /**

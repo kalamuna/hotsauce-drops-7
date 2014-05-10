@@ -66,5 +66,5 @@ dependencies[] = uuid
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hotsauce"
-datestamp = "1399683480"
+datestamp = "1399740948"
 

@@ -109,3 +109,11 @@ features[file_display][] = video__preview__media_youtube_image
 features[file_display][] = video__teaser__media_youtube_image
 features[file_display][] = video__teaser__media_youtube_video
 features[views_view][] = hot_widgetss_general_content
+
+
+; Information added by drush on 2014-05-10
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "hot_widgets"
+datestamp = "1399740960"
+

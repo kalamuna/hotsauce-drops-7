@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * hot_wysiywg.features.inc
+ * hot_wysiwyg.features.inc
  */
 
 /**

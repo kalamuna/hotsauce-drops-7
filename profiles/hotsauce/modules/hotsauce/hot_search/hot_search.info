@@ -53,3 +53,11 @@ features[variable][] = search_active_modules
 features[variable][] = search_api_facets_search_ids
 features[views_view][] = hotsauce_database_search
 features[views_view][] = hot_search
+
+
+; Information added by drush on 2014-05-10
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "hot_search"
+datestamp = "1399740951"
+

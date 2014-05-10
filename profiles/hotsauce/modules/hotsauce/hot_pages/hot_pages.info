@@ -45,3 +45,11 @@ features[variable][] = panelizer_defaults_node_hotsauce_page
 features[variable][] = panelizer_node:hotsauce_page_allowed_layouts_default
 features[variable][] = panelizer_node:hotsauce_page_allowed_types_default
 features[variable][] = save_continue_hotsauce_page
+
+
+; Information added by drush on 2014-05-10
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "hot_pages"
+datestamp = "1399740952"
+

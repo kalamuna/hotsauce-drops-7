@@ -2,7 +2,7 @@ HotCore!
 =============
 This is the magical core of the HotSauce! framework. It helps to package the
 entire distribution and provides some generally useful features that other
-parts of HotSauce! can leverage!
+parts of HotSauce! can leverage.
 
 Key Features
 * Packages a customized design for the Panels IPE experience
