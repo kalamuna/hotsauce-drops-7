@@ -1,0 +1,40 @@
+sname = HotWYSIWYG!
+description = Integrates a WYSIWYG into Drupal.
+core = 7.x
+package = HotSauce!
+project = hot_wysiywg
+dependencies[] = caption_filter
+dependencies[] = ctools
+dependencies[] = defaultconfig
+dependencies[] = features
+dependencies[] = image_resize_filter
+dependencies[] = linkit
+dependencies[] = media
+dependencies[] = media_internet
+dependencies[] = media_vimeo
+dependencies[] = media_wysiwyg
+dependencies[] = media_youtube
+dependencies[] = strongarm
+dependencies[] = wysiwyg
+dependencies[] = wysiwyg_filter
+stylesheets[all][] = hotsauce-wysiwyg.css
+features[ctools][] = linkit:linkit_profiles:1
+features[ctools][] = strongarm:strongarm:1
+features[defaultconfig][] = user_default_permissions:use text format hotsauce_html_text
+features[defaultconfig][] = user_default_permissions:use text format hot_wysiywg_text
+features[features_api][] = api:2
+features[filter][] = hotsauce_html_text
+features[filter][] = hot_wysiywg_text
+features[linkit_profiles][] = content_editors
+features[variable][] = media_wysiwyg_wysiwyg_allowed_types
+features[variable][] = media_wysiwyg_wysiwyg_browser_plugins
+features[wysiwyg][] = hotsauce_html_text
+features[wysiwyg][] = hot_wysiywg_text
+
+
+; Information added by drush on 2014-05-10
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "hot_wysiwyg"
+datestamp = "1399683488"
+
