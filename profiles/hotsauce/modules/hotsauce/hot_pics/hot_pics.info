@@ -49,11 +49,3 @@ features[image][] = hotsauce_image_spotlight
 features[image][] = hotsauce_image_square
 features[image][] = hotsauce_image_thumbnail
 features[image][] = hotsauce_image_video
-
-
-; Information added by drush on 2014-05-10
-version = "7.x-1.x-dev"
-core = "7.x"
-project = "hot_pics"
-datestamp = "1399683500"
-

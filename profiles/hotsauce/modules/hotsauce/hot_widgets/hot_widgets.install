@@ -98,7 +98,7 @@ function hot_widgetss_update_dependencies() {
   $deps['hot_widgetss'][7005] = array(
     // I think that file_load() in our hot_widgetss_update_7005() will
     // attempt to use pathauto, which means it's a dependency.
-    'hotsauce_core' => 7002,
+    'hot_core' => 7002,
   );
   return $deps;
 }

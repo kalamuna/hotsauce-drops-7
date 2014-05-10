@@ -70,11 +70,3 @@ features[variable][] = page_manager_term_view_disabled
 features[variable][] = panelizer_taxonomy_term:hotsauce_categories_allowed_layouts_default
 features[variable][] = panelizer_taxonomy_term:hotsauce_categories_allowed_types_default
 features[views_view][] = hotsauce_taxonomy
-
-
-; Information added by drush on 2014-05-10
-version = "7.x-1.x-dev"
-core = "7.x"
-project = "hot_core"
-datestamp = "1399683501"
-

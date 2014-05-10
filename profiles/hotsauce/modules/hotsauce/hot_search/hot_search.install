@@ -27,9 +27,9 @@ function hot_search_uninstall() {
  */
 function hot_search_update_dependencies() {
   $deps = array();
-  // We need hotsauce_core_update_7002() to run before search_api_solr_update_7102().
+  // We need hot_core_update_7002() to run before search_api_solr_update_7102().
   $deps['search_api_solr'][7102] = array(
-    'hotsauce_core' => 7002,
+    'hot_core' => 7002,
   );
   return $deps;
 }
