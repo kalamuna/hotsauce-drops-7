@@ -55,5 +55,5 @@ features[image][] = hotsauce_image_video
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_pics"
-datestamp = "1399740963"
+datestamp = "1399742400"
 

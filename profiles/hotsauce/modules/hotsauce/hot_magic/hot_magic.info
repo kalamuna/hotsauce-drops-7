@@ -19,5 +19,5 @@ features[features_api][] = api:2
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_magic"
-datestamp = "1399740960"
+datestamp = "1399742396"
 

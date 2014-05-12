@@ -51,5 +51,5 @@ features[variable][] = save_continue_hotsauce_page
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_pages"
-datestamp = "1399740952"
+datestamp = "1399742387"
 

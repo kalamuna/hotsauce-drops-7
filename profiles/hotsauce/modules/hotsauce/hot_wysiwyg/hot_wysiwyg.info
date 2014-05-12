@@ -36,5 +36,5 @@ features[wysiwyg][] = hot_wysiywg_text
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_wysiwyg"
-datestamp = "1399740951"
+datestamp = "1399742388"
 

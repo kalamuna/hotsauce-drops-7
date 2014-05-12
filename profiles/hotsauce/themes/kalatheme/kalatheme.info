@@ -38,5 +38,5 @@ plugins[panels][styles] = styles
 version = "7.x-3.0-rc3+0-dev"
 core = "7.x"
 project = "kalatheme"
-datestamp = "1399740974"
+datestamp = "1399742411"
 

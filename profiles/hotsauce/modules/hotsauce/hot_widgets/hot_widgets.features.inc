@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * hot_widgetss.features.inc
+ * hot_widgets.features.inc
  */
 
 /**

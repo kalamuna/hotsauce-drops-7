@@ -76,5 +76,5 @@ features[views_view][] = hotsauce_taxonomy
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_core"
-datestamp = "1399740971"
+datestamp = "1399742409"
 
