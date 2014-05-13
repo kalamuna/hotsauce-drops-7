@@ -55,9 +55,9 @@ features[views_view][] = hotsauce_database_search
 features[views_view][] = hot_search
 
 
-; Information added by drush on 2014-05-10
+; Information added by drush on 2014-05-13
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_search"
-datestamp = "1399742387"
+datestamp = "1399941045"
 

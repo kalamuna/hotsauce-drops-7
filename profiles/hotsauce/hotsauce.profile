@@ -39,21 +39,9 @@ function hotsauce_install_tasks_alter(&$tasks, $install_state) {
 }
 
 /**
- * Implements hook_apps_servers_info()
- */
-function hotsauce_apps_servers_info() {
-  //$info =  drupal_parse_info_file(drupal_get_path('profile', 'hotsauce') . '/hotsauce.info');
-  return array(
-    'hotapps' => array(
-      'title' => 'HotApps!',
-      'description' => 'First generation HotApps! for the people.',
-      'manifest' => 'http://apps.kalamuna.com/hotapps1',
-    ),
-  );
-}
-
-/**
  * Form to configure the Kalatheme
+ * @todo we should move this stuff into kalatheme so it can be used in other
+ * install profiles
  */
 function hotsauce_theme_configure_form($form, &$form_state) {
   // Set the page title
@@ -103,7 +91,11 @@ function hotsauce_theme_configure_form_validate($form, &$form_state) {
  */
 function hotsauce_enable_theme($form, &$form_state) {
   // Generate subtheme and build its settings var
-  if (isset($form_state['values']['build_subtheme']) && !$form_state['values']['build_subtheme']) {
+  // @todo we should move this stuff into kalatheme so it can be used in other
+  // install profiles
+  //
+  // @todo: support for subtheme generation.
+  //if (isset($form_state['values']['build_subtheme']) && !$form_state['values']['build_subtheme']) {
     // Set basic settings
     $theme_settings['bootstrap_library'] = $form_state['values']['bootstrap_library'];
     $theme_settings['fontawesome'] = $form_state['values']['fontawesome'];
@@ -120,7 +112,7 @@ function hotsauce_enable_theme($form, &$form_state) {
     // We need to do the big dump
     // @todo: should figure out the actual caches we need to clear
     drupal_flush_all_caches();
-  }
+ // }
 }
 
 /**

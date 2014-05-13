@@ -2,7 +2,7 @@ name = HotWidgets!
 description = Creates generic widget functionality to customize wide and far.
 core = 7.x
 package = HotSauce!
-project = hot_widgetss
+project = hot_widgets
 dependencies[] = ctools
 dependencies[] = defaultconfig
 dependencies[] = features
@@ -23,7 +23,7 @@ dependencies[] = text
 dependencies[] = views
 dependencies[] = views_autocomplete_filters
 dependencies[] = views_content
-stylesheets[all][] = hotsauce-widgets.css
+stylesheets[all][] = hot-widgets.css
 features[ctools][] = file_entity:file_default_displays:1
 features[ctools][] = views:views_default:3.0
 features[defaultconfig][] = user_default_permissions:add media from remote sources
@@ -108,12 +108,12 @@ features[file_display][] = video__preview__file_field_media_large_icon
 features[file_display][] = video__preview__media_youtube_image
 features[file_display][] = video__teaser__media_youtube_image
 features[file_display][] = video__teaser__media_youtube_video
-features[views_view][] = hot_widgetss_general_content
+features[views_view][] = hot_widgets_general_content
 
 
-; Information added by drush on 2014-05-10
+; Information added by drush on 2014-05-13
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_widgets"
-datestamp = "1399742395"
+datestamp = "1399941067"
 

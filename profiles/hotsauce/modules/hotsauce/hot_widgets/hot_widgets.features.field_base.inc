@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * hot_widgetss.features.field_base.inc
+ * hot_widgets.features.field_base.inc
  */
 
 /**
  * Implements hook_field_default_field_bases().
  */
-function hot_widgetss_field_default_field_bases() {
+function hot_widgets_field_default_field_bases() {
   $field_bases = array();
 
   // Exported field_base: 'field_basic_file_file'
@@ -146,7 +146,7 @@ function hot_widgetss_field_default_field_bases() {
       ),
     ),
     'locked' => 0,
-    'module' => 'hot_widgetss',
+    'module' => 'hot_widgets',
     'settings' => array(
       'default_image' => 0,
       'uri_scheme' => 'public',

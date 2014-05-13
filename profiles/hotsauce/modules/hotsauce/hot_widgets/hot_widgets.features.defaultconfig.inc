@@ -1,15 +1,15 @@
 <?php
 /**
  * @file
- * hot_widgetss.features.defaultconfig.inc
+ * hot_widgets.features.defaultconfig.inc
  */
 
 /**
  * Implements hook_defaultconfig_features().
  */
-function hot_widgetss_defaultconfig_features() {
+function hot_widgets_defaultconfig_features() {
   return array(
-    'hot_widgetss' => array(
+    'hot_widgets' => array(
       'user_default_permissions' => 'user_default_permissions',
     ),
   );
@@ -18,7 +18,7 @@ function hot_widgetss_defaultconfig_features() {
 /**
  * Implements hook_defaultconfig_user_default_permissions().
  */
-function hot_widgetss_defaultconfig_user_default_permissions() {
+function hot_widgets_defaultconfig_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: 'add media from remote sources'.

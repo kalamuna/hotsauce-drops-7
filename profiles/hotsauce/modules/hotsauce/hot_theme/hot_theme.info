@@ -10,9 +10,9 @@ stylesheets[all][] = css/hotsauce-accordian.css
 features[features_api][] = api:2
 
 
-; Information added by drush on 2014-05-10
+; Information added by drush on 2014-05-13
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_theme"
-datestamp = "1399742398"
+datestamp = "1399941071"
 

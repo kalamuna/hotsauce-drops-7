@@ -51,9 +51,9 @@ features[image][] = hotsauce_image_thumbnail
 features[image][] = hotsauce_image_video
 
 
-; Information added by drush on 2014-05-10
+; Information added by drush on 2014-05-13
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_pics"
-datestamp = "1399742400"
+datestamp = "1399941075"
 

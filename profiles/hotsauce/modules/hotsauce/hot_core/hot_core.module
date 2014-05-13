@@ -80,12 +80,11 @@ function hot_core_preprocess_html(&$variables) {
  * Implements hook_apps_servers_info()
  */
 function hot_core_apps_servers_info() {
-  $info =  drupal_parse_info_file(drupal_get_path('module', 'hot_core') . '/hot_core.info');
   return array(
-    'hotsauce' => array(
-      'title' => 'hotsauce',
-      'description' => 'Apps for hotsauce',
-      'manifest' => (empty($info['version']) || $info['version'] == '7.x-1.x-dev' || strpos($info['version'], '-dev')) ? 'http://apps.getpantheon.com/hotsauce-dev' : 'http://apps.getpantheon.com/hotsauce',
+    'hotapps' => array(
+      'title' => 'HotApps!',
+      'description' => 'First generation HotApps! for the people.',
+      'manifest' => 'http://apps.kalamuna.com/hotapps1',
     ),
   );
 }

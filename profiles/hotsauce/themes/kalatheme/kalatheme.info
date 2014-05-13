@@ -33,10 +33,17 @@ settings[fontawesome] = 1
 
 plugins[panels][styles] = styles
 
-
-; Information added by drush on 2014-05-10
-version = "7.x-3.0-rc3+0-dev"
+; Information added by Drupal.org packaging script on 2014-05-10
+version = "7.x-3.0-rc3"
 core = "7.x"
 project = "kalatheme"
-datestamp = "1399742411"
+datestamp = "1399740528"
+
+
+
+; Information added by drush on 2014-05-13
+version = "7.x-3.0-rc3+74-dev"
+core = "7.x"
+project = "kalatheme"
+datestamp = "1399941090"
 

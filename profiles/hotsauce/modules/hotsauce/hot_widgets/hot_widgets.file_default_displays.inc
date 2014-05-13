@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * hot_widgetss.file_default_displays.inc
+ * hot_widgets.file_default_displays.inc
  */
 
 /**
  * Implements hook_file_default_displays().
  */
-function hot_widgetss_file_default_displays() {
+function hot_widgets_file_default_displays() {
   $export = array();
 
   $file_display = new stdClass();

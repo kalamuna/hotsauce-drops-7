@@ -72,9 +72,9 @@ features[variable][] = panelizer_taxonomy_term:hotsauce_categories_allowed_types
 features[views_view][] = hotsauce_taxonomy
 
 
-; Information added by drush on 2014-05-10
+; Information added by drush on 2014-05-13
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_core"
-datestamp = "1399742409"
+datestamp = "1399941088"
 

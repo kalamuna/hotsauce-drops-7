@@ -1,4 +1,4 @@
-sname = HotWYSIWYG!
+name = HotWYSIWYG!
 description = Integrates a WYSIWYG into Drupal.
 core = 7.x
 package = HotSauce!
@@ -32,9 +32,9 @@ features[wysiwyg][] = hotsauce_html_text
 features[wysiwyg][] = hot_wysiywg_text
 
 
-; Information added by drush on 2014-05-10
+; Information added by drush on 2014-05-13
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_wysiwyg"
-datestamp = "1399742388"
+datestamp = "1399941046"
 

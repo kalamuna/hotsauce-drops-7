@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * hot_widgetss.features.field_instance.inc
+ * hot_widgets.features.field_instance.inc
  */
 
 /**
  * Implements hook_field_default_field_instances().
  */
-function hot_widgetss_field_default_field_instances() {
+function hot_widgets_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance: 'fieldable_panels_pane-basic_file-field_basic_file_file'
@@ -310,7 +310,7 @@ function hot_widgetss_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'module' => 'hot_widgetss',
+        'module' => 'hot_widgets',
         'settings' => array(
           'image_style' => 'hotsauce_image_spotlight',
         ),
@@ -335,7 +335,7 @@ function hot_widgetss_field_default_field_instances() {
     ),
     'widget' => array(
       'active' => 0,
-      'module' => 'hot_widgetss',
+      'module' => 'hot_widgets',
       'settings' => array(),
       'type' => 'hotsauce_spotlight_form',
       'weight' => -4,

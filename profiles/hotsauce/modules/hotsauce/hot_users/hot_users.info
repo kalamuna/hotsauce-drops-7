@@ -55,9 +55,9 @@ features[variable][] = user_picture_field_source_entity
 features[variable][] = user_picture_field_source_field
 
 
-; Information added by drush on 2014-05-10
+; Information added by drush on 2014-05-13
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_users"
-datestamp = "1399742387"
+datestamp = "1399941047"
 

@@ -47,9 +47,9 @@ features[variable][] = panelizer_node:hotsauce_page_allowed_types_default
 features[variable][] = save_continue_hotsauce_page
 
 
-; Information added by drush on 2014-05-10
+; Information added by drush on 2014-05-13
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "hot_pages"
-datestamp = "1399742387"
+datestamp = "1399941046"
 

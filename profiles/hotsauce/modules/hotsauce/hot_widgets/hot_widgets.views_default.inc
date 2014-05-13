@@ -1,17 +1,17 @@
 <?php
 /**
  * @file
- * hot_widgetss.views_default.inc
+ * hot_widgets.views_default.inc
  */
 
 /**
  * Implements hook_views_default_views().
  */
-function hot_widgetss_views_default_views() {
+function hot_widgets_views_default_views() {
   $export = array();
 
   $view = new view();
-  $view->name = 'hot_widgetss_general_content';
+  $view->name = 'hot_widgets_general_content';
   $view->description = 'Administrative view to show content.';
   $view->tag = 'default';
   $view->base_table = 'node';
@@ -202,7 +202,7 @@ function hot_widgetss_views_default_views() {
   $handler->display->display_options['allow']['title_override'] = 0;
   $handler->display->display_options['allow']['exposed_form'] = 'exposed_form';
   $handler->display->display_options['allow']['fields_override'] = 'fields_override';
-  $export['hot_widgetss_general_content'] = $view;
+  $export['hot_widgets_general_content'] = $view;
 
   return $export;
 }

@@ -4,8 +4,8 @@ core = 7.x
 
 ; Kalatheme
 
-projects[kalatheme][type] = theme
 projects[kalatheme][version] = 3.x-dev
+projects[kalatheme][type] = theme
 projects[kalatheme][download][type] = git
 projects[kalatheme][download][branch] = 7.x-3.x
 
