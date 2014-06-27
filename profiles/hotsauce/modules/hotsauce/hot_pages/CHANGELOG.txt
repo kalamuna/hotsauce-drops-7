@@ -1,4 +1,0 @@
-HotPages! 7.x-1.5, 2014-05-10
-----------------------------
-- No changes since last release.
-

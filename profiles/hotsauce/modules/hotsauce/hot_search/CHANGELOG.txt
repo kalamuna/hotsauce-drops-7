@@ -1,3 +1,0 @@
-HotSearch! 7.x-1.0, 2014-05-10
------------------------------
-- No changes since last release.

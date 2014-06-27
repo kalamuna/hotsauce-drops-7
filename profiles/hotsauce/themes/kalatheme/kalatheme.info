@@ -41,9 +41,9 @@ datestamp = "1399740528"
 
 
 
-; Information added by drush on 2014-05-13
+; Information added by drush on 2014-06-27
 version = "7.x-3.0-rc3+74-dev"
 core = "7.x"
 project = "kalatheme"
-datestamp = "1399941090"
+datestamp = "1403902243"
 
